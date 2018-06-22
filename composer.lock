@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "188fa13dbf1b5e0a4eea061109ba0990",
+    "content-hash": "98cda00ffc28afa8e295539dcf01e35d",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2292,7 +2292,7 @@
     "packages-dev": [
         {
             "name": "benconstable/phpspec-laravel",
-            "version": "v4.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenConstable/phpspec-laravel.git",
@@ -4289,7 +4289,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "benconstable/phpspec-laravel": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

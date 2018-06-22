@@ -11,7 +11,7 @@
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
-        "benconstable/phpspec-laravel": "~4.0",
+        "benconstable/phpspec-laravel": "dev-master#0146679171136c406d86cc356a14faa6b9ba4d30",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "leanphp/phpspec-code-coverage": "^4.2",
