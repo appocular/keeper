@@ -154,11 +154,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Oogle\Keeper\Providers\AppServiceProvider::class,
+        Oogle\Keeper\Providers\AuthServiceProvider::class,
+        // Oogle\Keeper\Providers\BroadcastServiceProvider::class,
+        Oogle\Keeper\Providers\EventServiceProvider::class,
+        Oogle\Keeper\Providers\RouteServiceProvider::class,
 
     ],
 
