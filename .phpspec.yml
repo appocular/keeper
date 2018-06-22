@@ -1,0 +1,17 @@
+suites:
+  main:
+    namespace: Oogle\Keeper
+    psr4_prefix: Oogle\Keeper
+    src_path: app
+    spec_path: specs
+
+extensions:
+  PhpSpec\Laravel\Extension\LaravelExtension:
+    testing_environment: "testing"
+  LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+    format:
+      - clover
+    output:
+      clover: clover.xml
+
+formatter.name: pretty
