@@ -3,7 +3,6 @@ suites:
     namespace: Oogle\Keeper
     psr4_prefix: Oogle\Keeper
     src_path: app
-    spec_path: specs
 
 extensions:
   PhpSpec\Laravel\Extension\LaravelExtension:
