@@ -2,6 +2,7 @@
 
 namespace Oogle\Keeper;
 
+use Oogle\Keeper\Exceptions\InvalidImageException;
 use Illuminate\Filesystem\Filesystem;
 
 class ImageStore
@@ -31,7 +32,11 @@ class ImageStore
 
     private function cleanPng($imageData)
     {
-        $image = imagecreatefromstring($imageData);
+        // Suppress warnings from imagecreatefromstring.
+        $image = @imagecreatefromstring($imageData);
+        if (!$image) {
+            throw new InvalidImageException('Invalid image data.');
+        }
         $tempFile = fopen("php://temp", 'r+');
 
         imagepng($image, $tempFile);

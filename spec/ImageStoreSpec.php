@@ -3,6 +3,7 @@
 namespace spec\Oogle\Keeper;
 
 use Oogle\Keeper\ImageStore;
+use Oogle\Keeper\Exceptions\InvalidImageException;
 use Illuminate\Filesystem\Filesystem;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -34,5 +35,11 @@ class ImageStoreSpec extends ObjectBehavior
         $this->beConstructedWith($fs);
         $image = file_get_contents(__DIR__ . '/../fixtures/images/basn6a16.png');
         $this->shouldThrow(\RuntimeException::class)->duringStore($image);
+    }
+
+    function it_should_throw_on_non_png_data(Filesystem $fs)
+    {
+        $this->beConstructedWith($fs);
+        $this->shouldThrow(InvalidImageException::class)->duringStore('bad image');
     }
 }
