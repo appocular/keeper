@@ -160,6 +160,8 @@ return [
         Oogle\Keeper\Providers\EventServiceProvider::class,
         Oogle\Keeper\Providers\RouteServiceProvider::class,
 
+        Oogle\Keeper\Providers\ImageStoreProvider::class,
+
     ],
 
     /*

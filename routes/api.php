@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// add "auth:" before api to enable auth
+// Checkout https://github.com/erjanmx/laravel-api-auth
+Route::middleware('api')->post('/image', 'ImageStoreController@create');
+Route::middleware('api')->get('/image/{id}', 'ImageStoreController@get');

@@ -4,7 +4,7 @@ namespace spec\Oogle\Keeper;
 
 use Oogle\Keeper\ImageStore;
 use Oogle\Keeper\Exceptions\InvalidImageException;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -41,5 +41,22 @@ class ImageStoreSpec extends ObjectBehavior
     {
         $this->beConstructedWith($fs);
         $this->shouldThrow(InvalidImageException::class)->duringStore('bad image');
+    }
+
+    function it_should_return_an_url_for_existing_file(Filesystem $fs)
+    {
+        $fs->exists('sha.png')->willReturn(true);
+        $fs->url('sha.png')->willReturn('http://localhost/some_path/sha.png');
+
+        $this->beConstructedWith($fs);
+        $this->url('sha')->shouldReturn('http://localhost/some_path/sha.png');
+    }
+
+    function it_should_throw_on_non_existing_files(Filesystem $fs)
+    {
+        $fs->exists('sha.png')->willReturn(false);
+
+        $this->beConstructedWith($fs);
+        $this->shouldThrow(\RuntimeException::class)->duringUrl('sha');
     }
 }

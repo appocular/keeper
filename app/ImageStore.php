@@ -2,8 +2,9 @@
 
 namespace Oogle\Keeper;
 
+use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use Oogle\Keeper\Exceptions\InvalidImageException;
-use Illuminate\Filesystem\Filesystem;
+use RuntimeException;
 
 class ImageStore
 {
@@ -18,19 +19,28 @@ class ImageStore
         $this->fs = $fs;
     }
 
-    public function store($imageData)
+    public function store($imageData) : string
     {
         $pngData = $this->cleanPng($imageData);
         $sha = hash('sha1', $pngData);
 
         if (!$this->fs->put($sha . '.png', $pngData)) {
-            throw new \RuntimeException('Could not write file.');
+            throw new RuntimeException('Could not write file.');
         }
 
         return $sha;
     }
 
-    private function cleanPng($imageData)
+    public function url($sha) : string
+    {
+        $filename = $sha . '.png';
+        if ($this->fs->exists($filename)) {
+            return $this->fs->url($filename);
+        }
+        throw new RuntimeException('File does not exist.');
+    }
+
+    protected function cleanPng($imageData)
     {
         // Suppress warnings from imagecreatefromstring.
         $image = @imagecreatefromstring($imageData);

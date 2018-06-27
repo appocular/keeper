@@ -12,5 +12,6 @@ extensions:
       - clover
     output:
       clover: clover.xml
-
+    whitelist:
+      - app
 formatter.name: pretty
