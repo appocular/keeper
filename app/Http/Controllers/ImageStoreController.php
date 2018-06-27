@@ -47,6 +47,12 @@ class ImageStoreController extends Controller
      */
     public function get($id)
     {
-        //
+        try {
+            $url = $this->imageStore->url($id);
+            return response('', 302, ['Location' => $url]);
+        } catch (Exception $e) {
+            dd($e);
+            return response()->json(['error' => 'Not found'], 404);
+        }
     }
 }
