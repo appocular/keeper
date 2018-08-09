@@ -1,6 +1,6 @@
 <?php
 
-namespace Oogle\Keeper\Http\Middleware;
+namespace Ogle\Keeper\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

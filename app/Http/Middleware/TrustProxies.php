@@ -1,6 +1,6 @@
 <?php
 
-namespace Oogle\Keeper\Http\Middleware;
+namespace Ogle\Keeper\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Fideloper\Proxy\TrustProxies as Middleware;

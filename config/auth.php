@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Oogle\Keeper\User::class,
+            'model' => Ogle\Keeper\User::class,
         ],
 
         // 'users' => [

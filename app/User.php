@@ -1,6 +1,6 @@
 <?php
 
-namespace Oogle\Keeper;
+namespace Ogle\Keeper;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;

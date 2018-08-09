@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Oogle\Keeper;
+namespace spec\Ogle\Keeper;
 
-use Oogle\Keeper\ImageStore;
-use Oogle\Keeper\Exceptions\InvalidImageException;
+use Ogle\Keeper\ImageStore;
+use Ogle\Keeper\Exceptions\InvalidImageException;
 use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

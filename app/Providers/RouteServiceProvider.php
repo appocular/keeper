@@ -1,6 +1,6 @@
 <?php
 
-namespace Oogle\Keeper\Providers;
+namespace Ogle\Keeper\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Oogle\Keeper\Http\Controllers';
+    protected $namespace = 'Ogle\Keeper\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

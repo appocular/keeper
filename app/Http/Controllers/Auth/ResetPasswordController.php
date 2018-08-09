@@ -1,8 +1,8 @@
 <?php
 
-namespace Oogle\Keeper\Http\Controllers\Auth;
+namespace Ogle\Keeper\Http\Controllers\Auth;
 
-use Oogle\Keeper\Http\Controllers\Controller;
+use Ogle\Keeper\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller

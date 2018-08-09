@@ -1,6 +1,6 @@
 <?php
 
-namespace Oogle\Keeper\Providers;
+namespace Ogle\Keeper\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Oogle\Keeper\Model' => 'Oogle\Keeper\Policies\ModelPolicy',
+        'Ogle\Keeper\Model' => 'Ogle\Keeper\Policies\ModelPolicy',
     ];
 
     /**

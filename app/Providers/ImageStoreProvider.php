@@ -1,8 +1,8 @@
 <?php
 
-namespace Oogle\Keeper\Providers;
+namespace Ogle\Keeper\Providers;
 
-use Oogle\Keeper\ImageStore;
+use Ogle\Keeper\ImageStore;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Filesystem\FilesystemManager;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Oogle\Keeper\Http\Controllers;
+namespace spec\Ogle\Keeper\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Oogle\Keeper\Exceptions\InvalidImageException;
-use Oogle\Keeper\Http\Controllers\ImageStoreController;
-use Oogle\Keeper\ImageStore;
+use Ogle\Keeper\Exceptions\InvalidImageException;
+use Ogle\Keeper\Http\Controllers\ImageStoreController;
+use Ogle\Keeper\ImageStore;
 use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Laravel\LaravelObjectBehavior;
 use PhpSpec\ObjectBehavior;

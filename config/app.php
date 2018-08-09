@@ -153,12 +153,12 @@ return [
         /*
          * Application Service Providers...
          */
-        Oogle\Keeper\Providers\AppServiceProvider::class,
-        Oogle\Keeper\Providers\AuthServiceProvider::class,
-        Oogle\Keeper\Providers\EventServiceProvider::class,
-        Oogle\Keeper\Providers\RouteServiceProvider::class,
+        Ogle\Keeper\Providers\AppServiceProvider::class,
+        Ogle\Keeper\Providers\AuthServiceProvider::class,
+        Ogle\Keeper\Providers\EventServiceProvider::class,
+        Ogle\Keeper\Providers\RouteServiceProvider::class,
 
-        Oogle\Keeper\Providers\ImageStoreProvider::class,
+        Ogle\Keeper\Providers\ImageStoreProvider::class,
 
     ],
 

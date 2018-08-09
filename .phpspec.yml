@@ -1,7 +1,7 @@
 suites:
   main:
-    namespace: Oogle\Keeper
-    psr4_prefix: Oogle\Keeper
+    namespace: Ogle\Keeper
+    psr4_prefix: Ogle\Keeper
     src_path: app
 
 extensions:

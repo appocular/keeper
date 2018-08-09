@@ -1,6 +1,6 @@
 <?php
 
-namespace Oogle\Keeper\Exceptions;
+namespace Ogle\Keeper\Exceptions;
 
 use RuntimeException;
 
