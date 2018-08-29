@@ -51,7 +51,6 @@ class ImageStoreController extends Controller
             $url = $this->imageStore->url($id);
             return response('', 302, ['Location' => $url]);
         } catch (Exception $e) {
-            dd($e);
             return response()->json(['error' => 'Not found'], 404);
         }
     }

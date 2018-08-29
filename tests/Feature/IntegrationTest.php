@@ -7,6 +7,17 @@ use Tests\TestCase;
 
 class IntegrationTest extends TestCase
 {
+
+    /**
+     * Setup before all tests.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        // Fake the file system.
+        Storage::fake('public');
+    }
+
     /**
      * Test that putting image works.
      *
@@ -14,8 +25,6 @@ class IntegrationTest extends TestCase
      */
     public function testStoringImage()
     {
-        Storage::fake('public');
-
         $image = file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png');
         $response = $this->json('POST', '/api/image', ['image' => base64_encode($image)]);
 
@@ -25,12 +34,10 @@ class IntegrationTest extends TestCase
     }
 
     /**
-     * Test that getting image returns redirect to stored file.
+     * Test that getting image returns redirect to stored file or.
      */
     public function testGetting()
     {
-        Storage::fake('public');
-
         $image = file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png');
         $response = $this->json('POST', '/api/image', ['image' => base64_encode($image)]);
 
@@ -42,5 +49,14 @@ class IntegrationTest extends TestCase
 
         $response->assertRedirect('storage/3a14fed556280d45d1542e9723d3cc62326c3777.png');
         $response->assertStatus(302);
+    }
+
+    /**
+     * Test that getting an unknown image returns 404.
+     */
+    public function test404()
+    {
+        $response = $this->get('/api/image/tateuhsoeu');
+        $response->assertStatus(404);
     }
 }
