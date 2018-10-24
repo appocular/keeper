@@ -19,7 +19,7 @@ class ImageStoreControllerSpec extends LaravelObjectBehavior
     {
         $store->store(Argument::any())->willReturn('the sha');
 
-        $request->json('image')->willReturn('image data');
+        $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
         $this->create($request)->shouldReturnResponse(response()->json(['sha' => 'the sha']));
     }
@@ -28,7 +28,7 @@ class ImageStoreControllerSpec extends LaravelObjectBehavior
     {
         $store->store(Argument::any())->willThrow(new InvalidImageException('bad image'));
 
-        $request->json('image')->willReturn('image data');
+        $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
         $this->create($request)->shouldReturnResponse(response()->json(['error' => 'bad image'], 400));
     }
@@ -37,7 +37,7 @@ class ImageStoreControllerSpec extends LaravelObjectBehavior
     {
         $store->store(Argument::any())->willThrow(new Exception('bad stuff'));
 
-        $request->json('image')->willReturn('image data');
+        $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
         $this->create($request)->shouldReturnResponse(response()->json(['error' => 'bad stuff'], 500));
     }

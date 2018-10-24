@@ -28,7 +28,7 @@ class ImageStoreController extends Controller
      */
     public function create(Request $request)
     {
-        $image = base64_decode($request->json('image'), true);
+        $image = $request->getContent();
         try {
             $sha = $this->imageStore->store($image);
         } catch (InvalidImageException $e) {

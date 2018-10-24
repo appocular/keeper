@@ -26,7 +26,7 @@ class IntegrationTest extends TestCase
     public function testStoringImage()
     {
         $image = file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png');
-        $response = $this->json('POST', '/api/image', ['image' => base64_encode($image)]);
+        $response = $this->postImage($image);
 
         $response->assertExactJson(["sha" => "3a14fed556280d45d1542e9723d3cc62326c3777"]);
 
@@ -39,7 +39,7 @@ class IntegrationTest extends TestCase
     public function testGetting()
     {
         $image = file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png');
-        $response = $this->json('POST', '/api/image', ['image' => base64_encode($image)]);
+        $response = $this->postImage($image);
 
         $response->assertExactJson(["sha" => "3a14fed556280d45d1542e9723d3cc62326c3777"]);
 
@@ -58,5 +58,27 @@ class IntegrationTest extends TestCase
     {
         $response = $this->get('/api/image/tateuhsoeu');
         $response->assertStatus(404);
+    }
+
+    /**
+     * Post image to service.
+     */
+    protected function postImage($content)
+    {
+        $headers = array_merge([
+            'CONTENT_LENGTH' => mb_strlen($content, '8bit'),
+            'CONTENT_TYPE' => 'image/png',
+            'Accept' => 'application/json',
+        ], []);
+
+        return $this->call(
+            'POST',
+            '/api/image',
+            [],
+            [],
+            [],
+            $this->transformHeadersToServerVars($headers),
+            $content
+        );
     }
 }
