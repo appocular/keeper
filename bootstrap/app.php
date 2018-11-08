@@ -78,9 +78,6 @@ $app->singleton(
 |
 */
 
-// $app->register(Appocular\Keeper\Providers\Appocular\KeeperServiceProvider::class);
-// $app->register(Appocular\Keeper\Providers\AuthServiceProvider::class);
-// $app->register(Appocular\Keeper\Providers\EventServiceProvider::class);
 $app->register(Appocular\Keeper\Providers\ImageStoreProvider::class);
 
 /*
