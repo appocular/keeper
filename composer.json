@@ -25,7 +25,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "Ogle\\Keeper\\": "app/"
+            "Appocular\\Keeper\\": "app/"
         }
     },
     "autoload-dev": {

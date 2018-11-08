@@ -1,9 +1,9 @@
 <?php
 
-namespace Ogle\Keeper;
+namespace Appocular\Keeper;
 
 use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
-use Ogle\Keeper\Exceptions\InvalidImageException;
+use Appocular\Keeper\Exceptions\InvalidImageException;
 use RuntimeException;
 
 class ImageStore

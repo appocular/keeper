@@ -1,9 +1,9 @@
 <?php
 
-namespace Ogle\Keeper\Http\Controllers\Auth;
+namespace Appocular\Keeper\Http\Controllers\Auth;
 
-use Ogle\Keeper\User;
-use Ogle\Keeper\Http\Controllers\Controller;
+use Appocular\Keeper\User;
+use Appocular\Keeper\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -59,7 +59,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \Ogle\Keeper\User
+     * @return \Appocular\Keeper\User
      */
     protected function create(array $data)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ogle\Keeper\Console;
+namespace Appocular\Keeper\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

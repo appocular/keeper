@@ -1,6 +1,6 @@
 <?php
 
-namespace Ogle\Keeper\Providers;
+namespace Appocular\Keeper\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Ogle\Keeper\Events\Event' => [
-            'Ogle\Keeper\Listeners\EventListener',
+        'Appocular\Keeper\Events\Event' => [
+            'Appocular\Keeper\Listeners\EventListener',
         ],
     ];
 

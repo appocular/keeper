@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => Ogle\Keeper\User::class,
+        'model' => Appocular\Keeper\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

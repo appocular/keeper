@@ -1,11 +1,11 @@
 <?php
 
-namespace Ogle\Keeper\Http\Controllers;
+namespace Appocular\Keeper\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Ogle\Keeper\ImageStore;
-use Ogle\Keeper\Exceptions\InvalidImageException;
+use Appocular\Keeper\ImageStore;
+use Appocular\Keeper\Exceptions\InvalidImageException;
 
 class ImageStoreController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ogle\Keeper\Http;
+namespace Appocular\Keeper\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -16,9 +16,9 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \Ogle\Keeper\Http\Middleware\TrimStrings::class,
+        \Appocular\Keeper\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Ogle\Keeper\Http\Middleware\TrustProxies::class,
+        \Appocular\Keeper\Http\Middleware\TrustProxies::class,
     ];
 
     /**
@@ -28,11 +28,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \Ogle\Keeper\Http\Middleware\EncryptCookies::class,
+            \Appocular\Keeper\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Ogle\Keeper\Http\Middleware\VerifyCsrfToken::class,
+            \Appocular\Keeper\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -55,7 +55,7 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \Ogle\Keeper\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \Appocular\Keeper\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];

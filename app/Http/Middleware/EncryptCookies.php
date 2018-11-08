@@ -1,6 +1,6 @@
 <?php
 
-namespace Ogle\Keeper\Http\Middleware;
+namespace Appocular\Keeper\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
 

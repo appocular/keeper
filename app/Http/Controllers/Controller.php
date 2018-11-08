@@ -1,6 +1,6 @@
 <?php
 
-namespace Ogle\Keeper\Http\Controllers;
+namespace Appocular\Keeper\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
