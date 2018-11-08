@@ -8,11 +8,11 @@ use Appocular\Keeper\Exceptions\InvalidImageException;
 use Appocular\Keeper\Http\Controllers\ImageStoreController;
 use Appocular\Keeper\ImageStore;
 use PhpSpec\Exception\Example\FailureException;
-use PhpSpec\Laravel\LaravelObjectBehavior;
+// use PhpSpec\Laravel\LaravelObjectBehavior;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class ImageStoreControllerSpec extends LaravelObjectBehavior
+class ImageStoreControllerSpec extends ObjectBehavior
 {
 
     function it_should_return_sha_when_storing_image(ImageStore $store, Request $request)
