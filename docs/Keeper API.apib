@@ -8,7 +8,7 @@ their image data, so each image is only stored once.
 It is idempotent, so storing the same image will simply return the
 same ID.
 
-## Images resource [/api/v1/image]
+## Images resource [/image]
 
 ### Add image [POST]
 
@@ -31,7 +31,7 @@ already stored, the SHA is simply returned.
             "error": "Invalid image data."
         }
 
-## Image [/api/v1/image/{sha}]
+## Image [/image/{sha}]
 
 + Parameters
   + sha: `3a14fed556280d45d1542e9723d3cc62326c3777` (string) - SHA of the image

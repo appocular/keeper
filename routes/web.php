@@ -15,7 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'api/v1'], function () use ($router) {
+$router->group([], function () use ($router) {
     $router->post('image', 'ImageStoreController@create');
     $router->get('/image/{id}', 'ImageStoreController@get');
 });
