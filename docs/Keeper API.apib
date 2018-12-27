@@ -25,6 +25,10 @@ already stored, the SHA is simply returned.
             "sha": "3a14fed556280d45d1542e9723d3cc62326c3777"
         }
 
++ Request (image/png)
+
+        <bad PNG image data>
+
 + Response 400 (application/json)
 
         {
@@ -47,6 +51,12 @@ Returns an URL to the image with the given SHA.
     + Headers
 
             Location: http://server/storage/3a14fed556280d45d1542e9723d3cc62326c3777.png
+
++ Request (application/json)
+
+    + Parameters
+
+        + sha: `invalid`
 
 + Response 404 (application/json)
 
