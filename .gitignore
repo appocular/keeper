@@ -3,4 +3,7 @@
 Homestead.json
 Homestead.yaml
 .env
-docs/index.html
+# Ignore generated docs.
+docs/Keeper API.html
+# Code coverage.
+clover.xml
