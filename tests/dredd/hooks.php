@@ -22,8 +22,16 @@ Hooks::afterEach(function (&$transaction) use (&$stash) {
     }
     // Check that the JSON payload matches the documentation.
     if (!empty($transaction->expected->body)) {
-        $actual = normalize_json($transaction->real->body);
-        $expected = normalize_json($transaction->expected->body);
+        switch ($transaction->expected->headers->{"Content-Type"}) {
+            case 'application/json':
+                $actual = normalize_json($transaction->real->body);
+                $expected = normalize_json($transaction->expected->body);
+                break;
+
+            default:
+                $actual = $transaction->real->body;
+                $expected = $transaction->expected->body;
+        }
 
         if ($actual != $expected) {
             $transaction->fail = "Difference in JSON payload.";
