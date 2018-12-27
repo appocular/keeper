@@ -22,21 +22,19 @@ Hooks::afterEach(function (&$transaction) use (&$stash) {
     }
     // Check that the JSON payload matches the documentation.
     if (!empty($transaction->expected->body)) {
-        if (!empty($transaction->real->body)) {
-            $actual = json_encode(array_sort_recursive(
-                json_decode($transaction->real->body, true)
-            ));
-        } else {
-            // No body, we'll compare with an empty result.
-            $actual = json_encode([]);
-        }
-        $expected = array_sort_recursive(
-            json_decode($transaction->expected->body, true)
-        );
-        $expected = json_encode($expected);
+        $actual = normalize_json($transaction->real->body);
+        $expected = normalize_json($transaction->expected->body);
 
         if ($actual != $expected) {
             $transaction->fail = "Difference in JSON payload.";
         }
     }
 });
+
+function normalize_json($json)
+{
+    if (!empty($json)) {
+        return json_encode(array_sort_recursive(json_decode($json, true)));
+    }
+    return "";
+}
