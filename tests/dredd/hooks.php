@@ -12,6 +12,14 @@ Hooks::beforeEach(function (&$transaction) {
 });
 
 Hooks::afterEach(function (&$transaction) use (&$stash) {
+    // Check that the headers matches the documentation.
+    if (!empty($transaction->expected->headers)) {
+        foreach ($transaction->expected->headers as $name => $content) {
+            if ($transaction->real->headers->{strtolower($name)} != $content) {
+                $transaction->fail = "Difference in $name header payload.";
+            }
+        }
+    }
     // Check that the JSON payload matches the documentation.
     if (!empty($transaction->expected->body)) {
         if (!empty($transaction->real->body)) {
