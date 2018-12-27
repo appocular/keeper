@@ -43,9 +43,10 @@ $app->singleton(
     Appocular\Keeper\Exceptions\Handler::class
 );
 
+// We don't need a custom CLI kernel, so use the standard one.
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    Appocular\Keeper\Console\Kernel::class
+    Laravel\Lumen\Console\Kernel::class
 );
 
 /*
