@@ -6,6 +6,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Appocular\Keeper\ImageStore;
 use Appocular\Keeper\Exceptions\InvalidImageException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ImageStoreController extends Controller
 {
@@ -32,9 +35,9 @@ class ImageStoreController extends Controller
         try {
             $sha = $this->imageStore->store($image);
         } catch (InvalidImageException $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            throw new BadRequestHttpException($e->getMessage());
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            throw new HttpException(500, $e->getMessage());
         }
         return response()->json(['sha' => $sha]);
     }
@@ -51,7 +54,7 @@ class ImageStoreController extends Controller
             $url = $this->imageStore->url($id);
             return response('', 302, ['Location' => $url]);
         } catch (Exception $e) {
-            return response()->json(['error' => 'Not found'], 404);
+            throw new NotFoundHttpException('Not found.');
         }
     }
 }

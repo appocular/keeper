@@ -2,15 +2,17 @@
 
 namespace spec\Appocular\Keeper\Http\Controllers;
 
-use Exception;
-use Illuminate\Http\Request;
 use Appocular\Keeper\Exceptions\InvalidImageException;
 use Appocular\Keeper\Http\Controllers\ImageStoreController;
 use Appocular\Keeper\ImageStore;
+use Exception;
+use Illuminate\Http\Request;
 use PhpSpec\Exception\Example\FailureException;
-// use PhpSpec\Laravel\LaravelObjectBehavior;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImageStoreControllerSpec extends ObjectBehavior
 {
@@ -30,7 +32,7 @@ class ImageStoreControllerSpec extends ObjectBehavior
 
         $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
-        $this->create($request)->shouldReturnResponse(response()->json(['error' => 'bad image'], 400));
+        $this->shouldThrow(new BadRequestHttpException('bad image'))->duringCreate($request);
     }
 
     function it_should_return_500_on_internal_errors(ImageStore $store, Request $request)
@@ -39,7 +41,7 @@ class ImageStoreControllerSpec extends ObjectBehavior
 
         $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
-        $this->create($request)->shouldReturnResponse(response()->json(['error' => 'bad stuff'], 500));
+        $this->shouldThrow(new HttpException(500, 'bad stuff'))->duringCreate($request);
     }
 
     function it_should_return_a_redirect_for_existing_images(ImageStore $store)
@@ -53,7 +55,7 @@ class ImageStoreControllerSpec extends ObjectBehavior
     {
         $store->url('the sha')->willThrow(new Exception());
         $this->beConstructedWith($store);
-        $this->get('the sha')->shouldReturnResponse(response()->json(['error' => 'Not found'], 404));
+        $this->shouldThrow(new NotFoundHttpException('Not found.'))->duringGet('the sha');
     }
 
     function getMatchers() : array

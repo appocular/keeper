@@ -25,15 +25,17 @@ already stored, the SHA is simply returned.
             "sha": "3a14fed556280d45d1542e9723d3cc62326c3777"
         }
 
-+ Request (image/png)
++ Request Bad request (image/png)
 
         <bad PNG image data>
 
-+ Response 400 (application/json)
++ Response 400 (text/plain; charset=UTF-8)
 
-        {
-            "error": "Invalid image data."
-        }
+        Invalid image data.
+
++ Response 500 (text/plain; charset=UTF-8)
+
+        Internal server error.
 
 ## Image [/image/{sha}]
 
@@ -44,7 +46,7 @@ already stored, the SHA is simply returned.
 
 Returns an URL to the image with the given SHA.
 
-+ Request (application/json)
++ Request (text/plain)
 
 + Response 302
 
@@ -52,14 +54,12 @@ Returns an URL to the image with the given SHA.
 
             Location: /storage/3a14fed556280d45d1542e9723d3cc62326c3777.png
 
-+ Request (application/json)
++ Request Not found (text/plain)
 
     + Parameters
 
         + sha: `invalid`
 
-+ Response 404 (application/json)
++ Response 404 (text/plain; charset=UTF-8)
 
-        {
-            "error": "Not found"
-        }
+        Not found.
