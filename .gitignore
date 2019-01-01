@@ -6,4 +6,5 @@ Homestead.yaml
 # Ignore generated docs.
 docs/Keeper API.html
 # Code coverage.
+coverage/*
 clover.xml

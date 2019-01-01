@@ -10,7 +10,8 @@ before_install:
 
 script:
   - ./vendor/bin/phpspec run
-  - dredd
-
-after_script:
-  - bash <(curl -s https://codecov.io/bash)
+  - make coverage-clover
+  - bash <(curl -s https://codecov.io/bash) -c -F spec -n Spec
+  - env REPORT_COVERAGE=true dredd
+  - make coverage-clover
+  - bash <(curl -s https://codecov.io/bash) -c -F api -n API
