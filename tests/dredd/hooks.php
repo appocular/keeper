@@ -9,6 +9,23 @@ Hooks::beforeEach(function (&$transaction) {
         $transaction->request->body = base64_encode($pngData);
         $transaction->request->bodyEncoding = 'base64';
     }
+
+    // For the call expecting PNG data, fix the expectation to the normalized
+    // PNG data returned by keeper.
+    if (trim($transaction->expected->body) == '<PNG image data>') {
+        $image = @imagecreatefromstring(file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png'));
+        $tempFile = fopen("php://temp", 'r+');
+
+        imagepng($image, $tempFile);
+        imagedestroy($image);
+
+        // Read what we have written.
+        rewind($tempFile);
+        $pngData = stream_get_contents($tempFile);
+        fclose($tempFile);
+
+        $transaction->expected->body = base64_encode($pngData);
+    }
 });
 
 Hooks::afterEach(function (&$transaction) use (&$stash) {

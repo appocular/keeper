@@ -44,16 +44,16 @@ class ImageStoreControllerSpec extends ObjectBehavior
         $this->shouldThrow(new HttpException(500, 'bad stuff'))->duringCreate($request);
     }
 
-    function it_should_return_a_redirect_for_existing_images(ImageStore $store)
+    function it_should_return_image(ImageStore $store)
     {
-        $store->url('the sha')->willReturn('the location');
+        $store->retrive('the sha')->willReturn('the data');
         $this->beConstructedWith($store);
-        $this->get('the sha')->shouldReturnResponse(response('', 302, ['Location' => 'the location']));
+        $this->get('the sha')->shouldReturnResponse(response('', 200)->setContent('the data'));
     }
 
     function it_should_return_a_404_for_unknown_images(ImageStore $store)
     {
-        $store->url('the sha')->willThrow(new Exception());
+        $store->retrive('the sha')->willThrow(new Exception());
         $this->beConstructedWith($store);
         $this->shouldThrow(new NotFoundHttpException('Not found.'))->duringGet('the sha');
     }

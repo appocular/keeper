@@ -51,8 +51,8 @@ class ImageStoreController extends Controller
     public function get($id)
     {
         try {
-            $url = $this->imageStore->url($id);
-            return response('', 302, ['Location' => $url]);
+            $image = $this->imageStore->retrive($id);
+            return response($image, 200, ['Content-Type' => 'image/png']);
         } catch (Exception $e) {
             throw new NotFoundHttpException('Not found.');
         }

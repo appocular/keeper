@@ -31,11 +31,11 @@ class ImageStore
         return $sha;
     }
 
-    public function url($sha) : string
+    public function retrive($sha)
     {
         $filename = $sha . '.png';
         if ($this->fs->exists($filename)) {
-            return $this->fs->url($filename);
+            return $this->fs->get($filename);
         }
         throw new RuntimeException('File does not exist.');
     }

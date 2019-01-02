@@ -43,13 +43,13 @@ class ImageStoreSpec extends ObjectBehavior
         $this->shouldThrow(InvalidImageException::class)->duringStore('bad image');
     }
 
-    function it_should_return_an_url_for_existing_file(Filesystem $fs)
+    function it_should_return_image_data_for_existing_file(Filesystem $fs)
     {
         $fs->exists('sha.png')->willReturn(true);
-        $fs->url('sha.png')->willReturn('http://localhost/some_path/sha.png');
+        $fs->get('sha.png')->willReturn('image data');
 
         $this->beConstructedWith($fs);
-        $this->url('sha')->shouldReturn('http://localhost/some_path/sha.png');
+        $this->retrive('sha')->shouldReturn('image data');
     }
 
     function it_should_throw_on_non_existing_files(Filesystem $fs)
@@ -57,6 +57,6 @@ class ImageStoreSpec extends ObjectBehavior
         $fs->exists('sha.png')->willReturn(false);
 
         $this->beConstructedWith($fs);
-        $this->shouldThrow(\RuntimeException::class)->duringUrl('sha');
+        $this->shouldThrow(\RuntimeException::class)->duringRetrive('sha');
     }
 }
