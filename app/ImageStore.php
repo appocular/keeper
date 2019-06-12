@@ -2,9 +2,11 @@
 
 namespace Appocular\Keeper;
 
-use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use Appocular\Keeper\Exceptions\InvalidImageException;
+use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use RuntimeException;
+use Symfony\Component\Process\Process;
+use Throwable;
 
 class ImageStore
 {
@@ -42,35 +44,16 @@ class ImageStore
 
     protected function cleanPng($imageData)
     {
-        // Suppress warnings from imagecreatefromstring.
-        $image = @\imagecreatefromstring($imageData);
-        if (!$image) {
+        // Run convert and make it strip all non-essential chunks. The dashes
+        // makes it use stdin and stdout.
+        $convert = new Process(['convert', '-define', 'png:include-chunk=none', '-', '-']);
+        $convert->setInput($imageData);
+        try {
+            $convert->mustRun();
+        } catch (Throwable $e) {
             throw new InvalidImageException('Invalid image data.');
         }
 
-        // We need to copy the image, as PHP seems forget the alpha-channel in
-        // the image when loaded via imagecreatefromstring. Sadly this doubles
-        // our memory usage, but we really want that alpha-channel.
-
-        $width = imagesx($image);
-        $height = imagesy($image);
-        $imageDst = \imagecreatetruecolor($width, $height);
-        // We want to keep the alpha channel. One would expect this to work on
-        // $image too, but it doesn't.
-        \imagealphablending($imageDst, false);
-        \imagesavealpha($imageDst, true);
-
-        $tempFile = fopen("php://temp", 'r+');
-        \imagecopyresampled($imageDst, $image, 0, 0, 0, 0, $width, $height, $width, $height);
-        imagepng($imageDst, $tempFile);
-        imagedestroy($image);
-        imagedestroy($imageDst);
-
-        // Read what we have written.
-        rewind($tempFile);
-        $pngData = stream_get_contents($tempFile);
-        fclose($tempFile);
-
-        return $pngData;
+        return $convert->getOutput();
     }
 }

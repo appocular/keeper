@@ -18,18 +18,18 @@ class ImageStoreSpec extends ObjectBehavior
 
     function it_should_store_files(Filesystem $fs)
     {
-        $fs->put('3c13efad9953e33a6ff0ddf0ebaf3218cb196ae4.png', Argument::any())
+        $fs->put('859502a22c2917698b5adf7c8a52d210b5ff7c32.png', Argument::any())
             ->willReturn(true)->shouldBeCalled();
 
         $this->beConstructedWith($fs);
         // 3x8 bits RGB color, the most likely format we'll see.
         $image = file_get_contents(__DIR__ . '/../fixtures/images/basn2c08.png');
-        $this->store($image)->shouldReturn('3c13efad9953e33a6ff0ddf0ebaf3218cb196ae4');
+        $this->store($image)->shouldReturn('859502a22c2917698b5adf7c8a52d210b5ff7c32');
     }
 
     function it_should_throw_on_write_errors(Filesystem $fs)
     {
-        $fs->put('3c13efad9953e33a6ff0ddf0ebaf3218cb196ae4.png', Argument::any())
+        $fs->put('859502a22c2917698b5adf7c8a52d210b5ff7c32.png', Argument::any())
             ->willReturn(false)->shouldBeCalled();
 
         $this->beConstructedWith($fs);
@@ -62,14 +62,14 @@ class ImageStoreSpec extends ObjectBehavior
 
     function it_should_retain_the_alpha_channel_of_the_image(Filesystem $fs)
     {
-        $fs->put('cb0bc88e6b66f7565f981fd9a1aaf2bd722d481a.png', Argument::any())
+        $fs->put('aed968efd86a03594a942c13d59922a84462fb35.png', Argument::any())
             ->willReturn(true)->shouldBeCalled();
 
         $this->beConstructedWith($fs);
         // 3x8 bits rgb color + 8 bit alpha-channel. Alpha channel is used in
         // diffs.
         $image = file_get_contents(__DIR__ . '/../fixtures/images/basn6a08.png');
-        $this->store($image)->shouldReturn('cb0bc88e6b66f7565f981fd9a1aaf2bd722d481a');
+        $this->store($image)->shouldReturn('aed968efd86a03594a942c13d59922a84462fb35');
     }
 
     /*
@@ -78,7 +78,7 @@ class ImageStoreSpec extends ObjectBehavior
      */
     function it_should_deal_with_16_bit_files(Filesystem $fs)
     {
-        $fs->put('f3d08c07bce4ea64427e5698daf693c9692394a4.png', Argument::any())
+        $fs->put('f71a33d3dabdd1669d66d58776b8674b496ae08f.png', Argument::any())
             ->willReturn(true)->shouldBeCalled();
 
         $this->beConstructedWith($fs);
@@ -87,6 +87,6 @@ class ImageStoreSpec extends ObjectBehavior
         // that seems the maximum PHP will go, but 16bit colors isn't really
         // needed in our case.
         $image = file_get_contents(__DIR__ . '/../fixtures/images/basn6a16.png');
-        $this->store($image)->shouldReturn('f3d08c07bce4ea64427e5698daf693c9692394a4');
+        $this->store($image)->shouldReturn('f71a33d3dabdd1669d66d58776b8674b496ae08f');
     }
 }

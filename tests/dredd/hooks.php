@@ -1,11 +1,12 @@
 <?php
 
 use Dredd\Hooks;
+use Symfony\Component\Process\Process;
 
 Hooks::beforeEach(function (&$transaction) {
     // Replace PNG data placeholder with real PNG data.
     if (trim($transaction->request->body) == '<PNG image data>') {
-        $pngData = file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png');
+        $pngData = file_get_contents(__DIR__ . '/../../fixtures/images/basn2c08.png');
         $transaction->request->body = base64_encode($pngData);
         $transaction->request->bodyEncoding = 'base64';
     }
@@ -13,18 +14,17 @@ Hooks::beforeEach(function (&$transaction) {
     // For the call expecting PNG data, fix the expectation to the normalized
     // PNG data returned by keeper.
     if (trim($transaction->expected->body) == '<PNG image data>') {
-        $image = @imagecreatefromstring(file_get_contents(__DIR__ . '/../../fixtures/images/basn6a16.png'));
-        $tempFile = fopen("php://temp", 'r+');
+        // Convert the PNG like Keeper does, else the PNG data is likely to be different.
+        $convert = new Process([
+            'convert',
+            '-define',
+            'png:include-chunk=none',
+            __DIR__ . '/../../fixtures/images/basn2c08.png',
+            '-',
+        ]);
+        $convert->mustRun();
 
-        imagepng($image, $tempFile);
-        imagedestroy($image);
-
-        // Read what we have written.
-        rewind($tempFile);
-        $pngData = stream_get_contents($tempFile);
-        fclose($tempFile);
-
-        $transaction->expected->body = base64_encode($pngData);
+        $transaction->expected->body = base64_encode($convert->getOutput());
     }
 });
 
@@ -37,6 +37,7 @@ Hooks::afterEach(function (&$transaction) use (&$stash) {
             }
         }
     }
+
     // Check that the payload matches the documentation.
     if (!empty($transaction->expected->body)) {
         switch ($transaction->expected->headers->{"Content-Type"}) {
