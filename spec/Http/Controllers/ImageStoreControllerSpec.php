@@ -20,11 +20,11 @@ class ImageStoreControllerSpec extends ObjectBehavior
 
     function it_should_return_location_when_storing_image(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
     {
-        $store->store(Argument::any())->willReturn('the_sha');
-        $urlGenerator->to('/image', 'the_sha')->willReturn('http://host/image/the_sha');
+        $store->store(Argument::any())->willReturn('the_hash');
+        $urlGenerator->to('/image', 'the_hash')->willReturn('http://host/image/the_hash');
 
         $this->beConstructedWith($store);
-        $expected = response('', 201)->header('Location', 'http://host/image/the_sha');
+        $expected = response('', 201)->header('Location', 'http://host/image/the_hash');
         $this->create($request, $urlGenerator)->shouldReturnResponse($expected);
     }
 
@@ -48,17 +48,17 @@ class ImageStoreControllerSpec extends ObjectBehavior
 
     function it_should_return_image(ImageStore $store)
     {
-        $store->retrive('the sha')->willReturn('the data');
+        $store->retrive('the hash')->willReturn('the data');
         $this->beConstructedWith($store);
         $expected = response('', 200)->header('Content-Type', 'image/png')->setContent('the data');
-        $this->get('the sha')->shouldReturnResponse($expected);
+        $this->get('the hash')->shouldReturnResponse($expected);
     }
 
     function it_should_return_a_404_for_unknown_images(ImageStore $store)
     {
-        $store->retrive('the sha')->willThrow(new Exception());
+        $store->retrive('the hash')->willThrow(new Exception());
         $this->beConstructedWith($store);
-        $this->shouldThrow(new NotFoundHttpException('Not found.'))->duringGet('the sha');
+        $this->shouldThrow(new NotFoundHttpException('Not found.'))->duringGet('the hash');
     }
 
     function getMatchers() : array

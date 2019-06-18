@@ -23,7 +23,7 @@ already stored, the return URL is the same.
 
     + Headers
 
-            Location: http://localhost:8080/image/859502a22c2917698b5adf7c8a52d210b5ff7c32
+            Location: http://localhost:8080/image/240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd
 
 + Request Bad request (image/png)
 
@@ -39,12 +39,16 @@ already stored, the return URL is the same.
 
 ## Image [/image/{id}]
 
+This is the resource for images. Storing images returns full URLs, so
+there's no need to construct requests to this resource. It's
+documented for completeness sake though.
+
 + Parameters
-  + id: `859502a22c2917698b5adf7c8a52d210b5ff7c32` (string) - Keeper ID of the image
+  + id: `240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd` (string) - Keeper ID of the image
 
 ### Get image [GET]
 
-Returns an URL to the image with the given SHA.
+Returns an URL to the image with the given hash.
 
 + Request (text/plain)
 

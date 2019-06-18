@@ -13,7 +13,7 @@ class StoreCommandTest extends \TestCase
     public function testAddingImage()
     {
         $fs = $this->prophesize(Filesystem::class);
-        $fs->put('859502a22c2917698b5adf7c8a52d210b5ff7c32.png', Argument::any())
+        $fs->put('240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd.png', Argument::any())
             ->willReturn('the id')->shouldBeCalled();
         $fsManager = $this->prophesize(FilesystemManager::class);
         $fsManager->disk('public')->willReturn($fs)->shouldBeCalled();

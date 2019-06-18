@@ -24,13 +24,13 @@ class ImageStore
     public function store($imageData) : string
     {
         $pngData = $this->cleanPng($imageData);
-        $sha = hash('sha1', $pngData);
+        $hash = hash('sha256', $pngData);
 
-        if (!$this->fs->put($sha . '.png', $pngData)) {
+        if (!$this->fs->put($hash . '.png', $pngData)) {
             throw new RuntimeException('Could not write file.');
         }
 
-        return $sha;
+        return $hash;
     }
 
     public function retrive($sha)
