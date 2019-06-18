@@ -13,7 +13,7 @@ Hooks::beforeEach(function (&$transaction) {
 
     // For the call expecting PNG data, fix the expectation to the normalized
     // PNG data returned by keeper.
-    if (trim($transaction->expected->body) == '<PNG image data>') {
+    if (isset($transaction->expected->body) && trim($transaction->expected->body) == '<PNG image data>') {
         // Convert the PNG like Keeper does, else the PNG data is likely to be different.
         $convert = new Process([
             'convert',

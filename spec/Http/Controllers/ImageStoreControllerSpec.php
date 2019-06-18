@@ -7,6 +7,7 @@ use Appocular\Keeper\Http\Controllers\ImageStoreController;
 use Appocular\Keeper\ImageStore;
 use Exception;
 use Illuminate\Http\Request;
+use Laravel\Lumen\Routing\UrlGenerator;
 use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -17,38 +18,40 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ImageStoreControllerSpec extends ObjectBehavior
 {
 
-    function it_should_return_sha_when_storing_image(ImageStore $store, Request $request)
+    function it_should_return_location_when_storing_image(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
     {
-        $store->store(Argument::any())->willReturn('the sha');
+        $store->store(Argument::any())->willReturn('the_sha');
+        $urlGenerator->to('/image', 'the_sha')->willReturn('http://host/image/the_sha');
 
-        $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
-        $this->create($request)->shouldReturnResponse(response()->json(['sha' => 'the sha']));
+        $expected = response('', 201)->header('Location', 'http://host/image/the_sha');
+        $this->create($request, $urlGenerator)->shouldReturnResponse($expected);
     }
 
-    function it_should_return_400_on_bad_image(ImageStore $store, Request $request)
+    function it_should_return_400_on_bad_image(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
     {
         $store->store(Argument::any())->willThrow(new InvalidImageException('bad image'));
 
         $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
-        $this->shouldThrow(new BadRequestHttpException('bad image'))->duringCreate($request);
+        $this->shouldThrow(new BadRequestHttpException('bad image'))->duringCreate($request, $urlGenerator);
     }
 
-    function it_should_return_500_on_internal_errors(ImageStore $store, Request $request)
+    function it_should_return_500_on_internal_errors(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
     {
         $store->store(Argument::any())->willThrow(new Exception('bad stuff'));
 
         $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
-        $this->shouldThrow(new HttpException(500, 'bad stuff'))->duringCreate($request);
+        $this->shouldThrow(new HttpException(500, 'bad stuff'))->duringCreate($request, $urlGenerator);
     }
 
     function it_should_return_image(ImageStore $store)
     {
         $store->retrive('the sha')->willReturn('the data');
         $this->beConstructedWith($store);
-        $this->get('the sha')->shouldReturnResponse(response('', 200)->setContent('the data'));
+        $expected = response('', 200)->header('Content-Type', 'image/png')->setContent('the data');
+        $this->get('the sha')->shouldReturnResponse($expected);
     }
 
     function it_should_return_a_404_for_unknown_images(ImageStore $store)
@@ -75,6 +78,14 @@ class ImageStoreControllerSpec extends ObjectBehavior
                         'Response with content "%s" does not match expected "%s".',
                         $subject->getContent(),
                         $expected->getContent()
+                    ));
+                }
+
+                if ($subject->headers != $expected->headers) {
+                    throw new FailureException(sprintf(
+                        'Response headers "%s" does not match expected "%s".',
+                        $subject->headers,
+                        $expected->headers
                     ));
                 }
 

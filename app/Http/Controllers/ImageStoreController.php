@@ -2,13 +2,14 @@
 
 namespace Appocular\Keeper\Http\Controllers;
 
+use Appocular\Keeper\Exceptions\InvalidImageException;
+use Appocular\Keeper\ImageStore;
 use Exception;
 use Illuminate\Http\Request;
-use Appocular\Keeper\ImageStore;
-use Appocular\Keeper\Exceptions\InvalidImageException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Laravel\Lumen\Routing\UrlGenerator;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImageStoreController extends Controller
 {
@@ -29,17 +30,17 @@ class ImageStoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, UrlGenerator $urlGenerator)
     {
         $image = $request->getContent();
         try {
-            $sha = $this->imageStore->store($image);
+            $id = $this->imageStore->store($image);
         } catch (InvalidImageException $e) {
             throw new BadRequestHttpException($e->getMessage());
         } catch (Exception $e) {
             throw new HttpException(500, $e->getMessage());
         }
-        return response()->json(['sha' => $sha]);
+        return response('', 201)->header('Location', $urlGenerator->to('/image', $id));
     }
 
     /**

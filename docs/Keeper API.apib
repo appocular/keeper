@@ -6,24 +6,24 @@ Keeper is a simple image store for Appocular. It indexes images by
 their image data, so each image is only stored once.
 
 It is idempotent, so storing the same image will simply return the
-same ID.
+same Keeper URL.
 
 ## Images resource [/image]
 
 ### Add image [POST]
 
 Add an image to the image store. This is idempotent, if the image is
-already stored, the SHA is simply returned.
+already stored, the return URL is the same.
 
 + Request (image/png)
 
         <PNG image data>
 
-+ Response 200 (application/json)
++ Response 201
 
-        {
-            "sha": "859502a22c2917698b5adf7c8a52d210b5ff7c32"
-        }
+    + Headers
+
+            Location: http://localhost:8080/image/859502a22c2917698b5adf7c8a52d210b5ff7c32
 
 + Request Bad request (image/png)
 
@@ -37,10 +37,10 @@ already stored, the SHA is simply returned.
 
         Internal server error.
 
-## Image [/image/{sha}]
+## Image [/image/{id}]
 
 + Parameters
-  + sha: `859502a22c2917698b5adf7c8a52d210b5ff7c32` (string) - SHA of the image
+  + id: `859502a22c2917698b5adf7c8a52d210b5ff7c32` (string) - Keeper ID of the image
 
 ### Get image [GET]
 
@@ -56,7 +56,7 @@ Returns an URL to the image with the given SHA.
 
     + Parameters
 
-        + sha: `invalid`
+        + id: `invalid`
 
 + Response 404 (text/plain; charset=UTF-8)
 
