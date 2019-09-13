@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImageStoreControllerSpec extends ObjectBehavior
 {
-
     function it_should_return_location_when_storing_image(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
     {
         $store->store(Argument::any())->willReturn('the_hash');
@@ -81,6 +80,8 @@ class ImageStoreControllerSpec extends ObjectBehavior
                     ));
                 }
 
+                $subject->headers->remove('Date');
+                $expected->headers->remove('Date');
                 if ($subject->headers != $expected->headers) {
                     throw new FailureException(sprintf(
                         'Response headers "%s" does not match expected "%s".',
