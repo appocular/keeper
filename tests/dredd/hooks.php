@@ -37,27 +37,6 @@ Hooks::afterEach(function (&$transaction) use (&$stash) {
             }
         }
     }
-
-    // Check that the payload matches the documentation.
-    if (!empty($transaction->expected->body)) {
-        switch ($transaction->expected->headers->{"Content-Type"}) {
-            case 'application/json':
-                $actual = normalize_json($transaction->real->body);
-                $expected = normalize_json($transaction->expected->body);
-                break;
-
-            default:
-                // Simple comparison for everything else. This includes
-                // text/plain which dredd apparently checks itself, but what
-                // the hell, we'll check it too.
-                $actual = $transaction->real->body;
-                $expected = $transaction->expected->body;
-        }
-
-        if ($actual != $expected) {
-            $transaction->fail = "Difference in JSON payload.";
-        }
-    }
 });
 
 function normalize_json($json)
