@@ -15,9 +15,17 @@ same Keeper URL.
 Add an image to the image store. This is idempotent, if the image is
 already stored, the return URL is the same.
 
+Caller needs to athenticate with a shared token.
+
 + Request (image/png)
 
-        <PNG image data>
+    + Headers
+
+            Authorization: Bearer MySharedToken
+
+    + Body
+
+            <PNG image data>
 
 + Response 201
 
@@ -25,9 +33,23 @@ already stored, the return URL is the same.
 
             Location: http://localhost:8080/image/240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd
 
++ Request Unauthorized (image/png)
+
+    + Body
+
+            <PNG image data>
+
++ Response 401 (text/plain; charset=UTF-8)
+
 + Request Bad request (image/png)
 
-        <bad PNG image data>
+    + Headers
+
+            Authorization: Bearer MySharedToken
+
+    + Body
+
+            <bad PNG image data>
 
 + Response 400 (text/plain; charset=UTF-8)
 

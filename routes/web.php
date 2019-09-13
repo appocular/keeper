@@ -15,7 +15,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group([], function () use ($router) {
+$router->group(['middleware' => 'auth:shared_token'], function () use ($router) {
     $router->post('image', 'ImageStoreController@create');
+});
+
+$router->group([], function () use ($router) {
     $router->get('/image/{id}', 'ImageStoreController@get');
 });

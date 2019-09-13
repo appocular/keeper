@@ -1,13 +1,9 @@
-dry-run: null
 hookfiles: ./tests/dredd/hooks.php
 language: vendor/bin/dredd-hooks-php
-sandbox: false
 server: php -S 0.0.0.0:8080 -t public
 server-wait: 0
 init: false
 custom: {}
-names: false
-only: []
 reporter: []
 output: []
 header: []
@@ -17,9 +13,7 @@ inline-errors: false
 details: false
 method: []
 color: true
-level: info
-timestamp: false
-silent: false
+loglevel: warning
 path: []
 hooks-worker-timeout: 5000
 hooks-worker-connect-timeout: 1500

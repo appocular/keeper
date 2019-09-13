@@ -1,6 +1,6 @@
 
 .PHONEY: test
-test: clean-coverage test-spec test-api
+test: clean-coverage test-spec test-unit test-api
 
 .PHONEY: test-spec
 test-spec:
@@ -8,11 +8,11 @@ test-spec:
 
 .PHONEY: test-unit
 test-unit:
-	./vendor/bin/phpunit --coverage-php=coverage/unit.cov
+	phpdbg -qrr ./vendor/bin/phpunit --coverage-php=coverage/unit.cov
 
 .PHONEY: test-api
 test-api:
-	env REPORT_COVERAGE=true dredd
+	env SHARED_TOKEN=MySharedToken REPORT_COVERAGE=true dredd
 
 .PHONEY: coverage-clover
 coverage-clover:
@@ -39,3 +39,8 @@ docs/Keeper\ API.html: docs/Keeper\ API.apib
 .PHONEY: clean
 clean: clean-coverage
 	rm -rf docs/Keeper\ API.html
+
+watch-test:
+	while true; do \
+	  find . \( -name .git -o -name vendor \) -prune -o -name '#*' -o -name '*.php' -a -print | entr -cd make test-spec test-unit test-api; \
+	done
