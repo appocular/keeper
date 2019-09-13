@@ -6,15 +6,15 @@ php:
 install: composer install --prefer-source
 
 before_install:
-  - npm install dredd@5.2.0 --no-optional --global
+  - npm install dredd@11.2.11 --no-optional --global
 
 script:
-  - ./vendor/bin/phpspec run
+  - make test-spec
   - make coverage-clover
   - bash <(curl -s https://codecov.io/bash) -c -F spec -n Spec
-  - ./vendor/bin/phpunit --coverage-php=coverage/unit.cov
+  - make test-unit
   - make coverage-clover
   - bash <(curl -s https://codecov.io/bash) -c -F unit
-  - env REPORT_COVERAGE=true dredd
+  - make test-api
   - make coverage-clover
   - bash <(curl -s https://codecov.io/bash) -c -F api -n API
