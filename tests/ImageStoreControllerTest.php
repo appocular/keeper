@@ -7,7 +7,7 @@ class ImageStoreControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        // Set up a frontend token.
+        // Set up a shared token.
         \putenv('SHARED_TOKEN=SharedToken');
     }
 
