@@ -78,9 +78,9 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//    Appocular\Keeper\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    Fideloper\Proxy\TrustProxies::class
+]);
 
 $app->routeMiddleware([
     'auth' => Appocular\Keeper\Http\Middleware\Authenticate::class,
@@ -99,6 +99,7 @@ $app->routeMiddleware([
 
 $app->register(Appocular\Keeper\Providers\ImageStoreProvider::class);
 $app->register(Appocular\Keeper\Providers\AuthServiceProvider::class);
+$app->register(Fideloper\Proxy\TrustedProxyServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
