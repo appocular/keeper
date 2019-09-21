@@ -38,11 +38,3 @@ Hooks::afterEach(function (&$transaction) use (&$stash) {
         }
     }
 });
-
-function normalize_json($json)
-{
-    if (!empty($json)) {
-        return json_encode(array_sort_recursive(json_decode($json, true)));
-    }
-    return "";
-}
