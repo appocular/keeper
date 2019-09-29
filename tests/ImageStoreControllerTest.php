@@ -4,7 +4,7 @@
 class ImageStoreControllerTest extends TestCase
 {
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         // Set up a shared token.
