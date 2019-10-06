@@ -4,6 +4,7 @@ namespace Appocular\Keeper;
 
 use Appocular\Keeper\Exceptions\InvalidImageException;
 use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 use Throwable;
@@ -12,20 +13,29 @@ class ImageStore
 {
 
     /**
-     * @var Filesystem
+     * @var \Illuminate\Contracts\Filesystem\Cloud
      */
     protected $fs;
 
-    public function __construct(Filesystem $fs)
+    /**
+     * @var Psr\Log\LoggerInterface
+     */
+    protected $log;
+
+    public function __construct(Filesystem $fs, LoggerInterface $log)
     {
         $this->fs = $fs;
+        $this->log = $log;
     }
 
     public function store($imageData) : string
     {
+        $this->log->debug('Cleaning PNG data');
         $pngData = $this->cleanPng($imageData);
+        $this->log->debug('Hashing PNG data');
         $hash = hash('sha256', $pngData);
 
+        $this->log->debug(sprintf('Saving "%s"', $hash));
         if (!$this->fs->put($hash . '.png', $pngData)) {
             throw new RuntimeException('Could not write file.');
         }

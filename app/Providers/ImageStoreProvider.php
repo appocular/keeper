@@ -16,7 +16,7 @@ class ImageStoreProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(ImageStore::class, function ($app) {
-            return new ImageStore($app['filesystem']->disk('public'));
+            return new ImageStore($app['filesystem']->disk('public'), $app['log']);
         });
     }
 }
