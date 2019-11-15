@@ -57,6 +57,7 @@ class ImageStore
         // Run convert and make it strip all non-essential chunks. The dashes
         // makes it use stdin and stdout.
         $convert = new Process(['convert', '-define', 'png:include-chunk=none', '-', '-']);
+        $convert->setTimeout(600);
         $convert->setInput($imageData);
         try {
             $convert->mustRun();
