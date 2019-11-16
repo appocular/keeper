@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Appocular\Keeper;
 
-use Appocular\Keeper\Exceptions\InvalidImageException;
+use Appocular\Keeper\Exceptions\InvalidImage;
 use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -72,7 +72,7 @@ class ImageStore
         try {
             $convert->mustRun();
         } catch (Throwable $e) {
-            throw new InvalidImageException('Invalid image data.');
+            throw new InvalidImage('Invalid image data.');
         }
 
         return $convert->getOutput();

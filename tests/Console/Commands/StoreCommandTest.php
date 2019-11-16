@@ -1,16 +1,17 @@
 <?php
 
-namespace Commands;
+declare(strict_types=1);
 
-use Appocular\Assessor\Repo;
+namespace Appocular\Keeper\Console\Commands;
+
+use Appocular\Keeper\TestCase;
 use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
 use Prophecy\Argument;
 
-// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace
-class StoreCommandTest extends \TestCase
+class StoreCommandTest extends TestCase
 {
-    public function testAddingImage()
+    public function testAddingImage(): void
     {
         $fs = $this->prophesize(Filesystem::class);
         $fs->put('240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd.png', Argument::any())

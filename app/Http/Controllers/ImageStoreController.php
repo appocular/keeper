@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Appocular\Keeper\Http\Controllers;
 
-use Appocular\Keeper\Exceptions\InvalidImageException;
+use Appocular\Keeper\Exceptions\InvalidImage;
 use Appocular\Keeper\ImageStore;
 use Exception;
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class ImageStoreController extends Controller
 
         try {
             $id = $this->imageStore->store($image);
-        } catch (InvalidImageException $e) {
+        } catch (InvalidImage $e) {
             throw new BadRequestHttpException($e->getMessage());
         } catch (Exception $e) {
             throw new HttpException(500, $e->getMessage());

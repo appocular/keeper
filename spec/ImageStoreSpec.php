@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Appocular\Keeper;
 
-use Appocular\Keeper\Exceptions\InvalidImageException;
+use Appocular\Keeper\Exceptions\InvalidImage;
 use Appocular\Keeper\ImageStore;
 use Illuminate\Contracts\Filesystem\Cloud as Filesystem;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:disable Squiz.Scope.MethodScope.Missing
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
 class ImageStoreSpec extends ObjectBehavior
 {
     function let(Filesystem $fs, LoggerInterface $log)
@@ -27,7 +33,7 @@ class ImageStoreSpec extends ObjectBehavior
             ->willReturn(true)->shouldBeCalled();
 
         // 3x8 bits RGB color, the most likely format we'll see.
-        $image = file_get_contents(__DIR__ . '/../fixtures/images/basn2c08.png');
+        $image = \file_get_contents(__DIR__ . '/../fixtures/images/basn2c08.png');
         $this->store($image)->shouldReturn('240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd');
     }
 
@@ -36,13 +42,13 @@ class ImageStoreSpec extends ObjectBehavior
         $fs->put('240e7948f07080dfe9671daa320bbb6e4e18ced5ff2d95e89bf59ce6784963bd.png', Argument::any())
             ->willReturn(false)->shouldBeCalled();
 
-        $image = file_get_contents(__DIR__ . '/../fixtures/images/basn2c08.png');
-        $this->shouldThrow(\RuntimeException::class)->duringStore($image);
+        $image = \file_get_contents(__DIR__ . '/../fixtures/images/basn2c08.png');
+        $this->shouldThrow(RuntimeException::class)->duringStore($image);
     }
 
     function it_should_throw_on_non_png_data()
     {
-        $this->shouldThrow(InvalidImageException::class)->duringStore('bad image');
+        $this->shouldThrow(InvalidImage::class)->duringStore('bad image');
     }
 
     function it_should_return_image_data_for_existing_file(Filesystem $fs)
@@ -57,7 +63,7 @@ class ImageStoreSpec extends ObjectBehavior
     {
         $fs->exists('hash.png')->willReturn(false);
 
-        $this->shouldThrow(\RuntimeException::class)->duringRetrive('hash');
+        $this->shouldThrow(RuntimeException::class)->duringRetrive('hash');
     }
 
     function it_should_retain_the_alpha_channel_of_the_image(Filesystem $fs)
@@ -67,7 +73,7 @@ class ImageStoreSpec extends ObjectBehavior
 
         // 3x8 bits rgb color + 8 bit alpha-channel. Alpha channel is used in
         // diffs.
-        $image = file_get_contents(__DIR__ . '/../fixtures/images/basn6a08.png');
+        $image = \file_get_contents(__DIR__ . '/../fixtures/images/basn6a08.png');
         $this->store($image)->shouldReturn('41e8adba57885d3bb6c5e53596ff56db54b1ef4b1c7d2fe2e3bb39e9045fb6d6');
     }
 
@@ -84,7 +90,7 @@ class ImageStoreSpec extends ObjectBehavior
         // file represented by the HASH is 3x8 bits RGB, with 8 bit alpha, as
         // that seems the maximum PHP will go, but 16bit colors isn't really
         // needed in our case.
-        $image = file_get_contents(__DIR__ . '/../fixtures/images/basn6a16.png');
+        $image = \file_get_contents(__DIR__ . '/../fixtures/images/basn6a16.png');
         $this->store($image)->shouldReturn('3f9200a6dee485e3fbf67e68b1e9f2bbb6e48387dd1e9c676c2e0bf48feb1a98');
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Appocular\Keeper\Http\Controllers;
 
-use Appocular\Keeper\Exceptions\InvalidImageException;
-use Appocular\Keeper\Http\Controllers\ImageStoreController;
+use Appocular\Keeper\Exceptions\InvalidImage;
 use Appocular\Keeper\ImageStore;
 use Exception;
 use Illuminate\Http\Request;
@@ -15,22 +16,28 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+// phpcs:disable Squiz.Scope.MethodScope.Missing
+// phpcs:disable SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint
 class ImageStoreControllerSpec extends ObjectBehavior
 {
-    function it_should_return_location_when_storing_image(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
-    {
+    function it_should_return_location_when_storing_image(
+        ImageStore $store,
+        UrlGenerator $urlGenerator,
+        Request $request
+    ) {
         $store->store(Argument::any())->willReturn('the_hash');
         $urlGenerator->to('/image', 'the_hash')->willReturn('http://host/image/the_hash');
         $request->getContent()->willReturn('image data');
 
         $this->beConstructedWith($store);
-        $expected = response('', 201)->header('Location', 'http://host/image/the_hash');
+        $expected = \response('', 201)->header('Location', 'http://host/image/the_hash');
         $this->create($request, $urlGenerator)->shouldReturnResponse($expected);
     }
 
     function it_should_return_400_on_bad_image(ImageStore $store, UrlGenerator $urlGenerator, Request $request)
     {
-        $store->store(Argument::any())->willThrow(new InvalidImageException('bad image'));
+        $store->store(Argument::any())->willThrow(new InvalidImage('bad image'));
 
         $request->getContent()->willReturn('image data');
         $this->beConstructedWith($store);
@@ -50,7 +57,7 @@ class ImageStoreControllerSpec extends ObjectBehavior
     {
         $store->retrive('the hash')->willReturn('the data');
         $this->beConstructedWith($store);
-        $expected = response('', 200)->header('Content-Type', 'image/png')->setContent('the data');
+        $expected = \response('', 200)->header('Content-Type', 'image/png')->setContent('the data');
         $this->get('the hash')->shouldReturnResponse($expected);
     }
 
@@ -61,38 +68,46 @@ class ImageStoreControllerSpec extends ObjectBehavior
         $this->shouldThrow(new NotFoundHttpException('Not found.'))->duringGet('the hash');
     }
 
-    function getMatchers() : array
+    /**
+     * @return array<string, \Closure>
+     */
+    function getMatchers(): array
     {
         return [
-            'returnResponse' => function ($subject, $expected) {
-                if ($subject->getStatusCode() != $expected->getStatusCode()) {
-                    throw new FailureException(sprintf(
+            'returnResponse' => static function ($subject, $expected): bool {
+                if ($subject->getStatusCode() !== $expected->getStatusCode()) {
+                    throw new FailureException(\sprintf(
                         'Response with code %s does not match expected %s.',
                         $subject->getStatusCode(),
-                        $expected->getStatusCode()
+                        $expected->getStatusCode(),
                     ));
                 }
 
-                if ($subject->getContent() != $expected->getContent()) {
-                    throw new FailureException(sprintf(
+                if ($subject->getContent() !== $expected->getContent()) {
+                    throw new FailureException(\sprintf(
                         'Response with content "%s" does not match expected "%s".',
                         $subject->getContent(),
-                        $expected->getContent()
+                        $expected->getContent(),
                     ));
                 }
 
                 $subject->headers->remove('Date');
                 $expected->headers->remove('Date');
-                if ($subject->headers != $expected->headers) {
-                    throw new FailureException(sprintf(
+                $subjectHeaders = $subject->headers->all();
+                $expectedHeaders = $expected->headers->all();
+                \ksort($subjectHeaders);
+                \ksort($expectedHeaders);
+
+                if ($subjectHeaders !== $expectedHeaders) {
+                    throw new FailureException(\sprintf(
                         'Response headers "%s" does not match expected "%s".',
                         $subject->headers,
-                        $expected->headers
+                        $expected->headers,
                     ));
                 }
 
                 return true;
-            }
+            },
         ];
     }
 }
