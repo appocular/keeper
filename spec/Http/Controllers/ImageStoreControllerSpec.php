@@ -21,6 +21,7 @@ class ImageStoreControllerSpec extends ObjectBehavior
     {
         $store->store(Argument::any())->willReturn('the_hash');
         $urlGenerator->to('/image', 'the_hash')->willReturn('http://host/image/the_hash');
+        $request->getContent()->willReturn('image data');
 
         $this->beConstructedWith($store);
         $expected = response('', 201)->header('Location', 'http://host/image/the_hash');

@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Keeper\Http\Controllers;
 
 use Appocular\Keeper\Exceptions\InvalidImageException;
 use Appocular\Keeper\ImageStore;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Laravel\Lumen\Routing\Controller;
 use Laravel\Lumen\Routing\UrlGenerator;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -15,7 +19,9 @@ class ImageStoreController extends Controller
 {
 
     /**
-     * @var ImageStore
+     * The image store.
+     *
+     * @var \Appocular\Keeper\ImageStore
      */
     protected $imageStore;
 
@@ -26,13 +32,11 @@ class ImageStoreController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, UrlGenerator $urlGenerator)
+    public function create(Request $request, UrlGenerator $urlGenerator): Response
     {
         $image = $request->getContent();
+
         try {
             $id = $this->imageStore->store($image);
         } catch (InvalidImageException $e) {
@@ -40,20 +44,19 @@ class ImageStoreController extends Controller
         } catch (Exception $e) {
             throw new HttpException(500, $e->getMessage());
         }
-        return response('', 201)->header('Location', $urlGenerator->to('/image', $id));
+
+        return \response('', 201)->header('Location', $urlGenerator->to('/image', $id));
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
      */
-    public function get($id)
+    public function get(string $id): Response
     {
         try {
             $image = $this->imageStore->retrive($id);
-            return response($image, 200, ['Content-Type' => 'image/png']);
+
+            return \response($image, 200, ['Content-Type' => 'image/png']);
         } catch (Exception $e) {
             throw new NotFoundHttpException('Not found.');
         }

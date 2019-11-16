@@ -1,6 +1,10 @@
 
+.PHONEY: phpcs
+phpcs:
+	./vendor/bin/phpcs
+
 .PHONEY: test
-test: clean-coverage test-spec test-unit test-api
+test: clean-coverage test-spec test-unit phpcs test-api
 
 .PHONEY: test-spec
 test-spec:

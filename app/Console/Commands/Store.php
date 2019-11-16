@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Appocular\Keeper\Console\Commands;
 
 use Appocular\Keeper\ImageStore;
@@ -21,12 +23,15 @@ class Store extends Command
      */
     protected $description = 'Store an image and output its ID.';
 
+    /**
+     * The image store to store image in.
+     *
+     * @var \Appocular\Keeper\ImageStore
+     */
     protected $imageStore;
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct(ImageStore $imageStore)
     {
@@ -36,12 +41,12 @@ class Store extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): ?int
     {
-        $kid = $this->imageStore->store(file_get_contents($this->argument('file')));
+        $kid = $this->imageStore->store(\file_get_contents($this->argument('file')));
         $this->line($kid);
+
+        return null;
     }
 }
