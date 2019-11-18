@@ -5,7 +5,7 @@ their image data, so each image is only stored once.
 
 [Documentation](docs/Keeper API.apib)
 
-[![](https://img.shields.io/travis/com/appocular/keeper.svg?style=for-the-badge)](https://travis-ci.com/appocular/keeper)
+[![](https://github.com/appocular/keeper/workflows/Run%20checks%20and%20tests/badge.svg)](https://github.com/appocular/keeper/actions)
 [![](https://img.shields.io/codecov/c/github/appocular/keeper.svg)](https://codecov.io/gh/appocular/keeper)
 
 Test PNG images from http://www.schaik.com/pngsuite/
