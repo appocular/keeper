@@ -4,7 +4,7 @@ phpcs:
 	./vendor/bin/phpcs
 
 .PHONEY: test
-test: clean-coverage test-spec test-unit phpcs test-api
+test: clean-coverage test-spec test-unit phpcs test-api coverage-clover
 
 .PHONEY: test-spec
 test-spec:
