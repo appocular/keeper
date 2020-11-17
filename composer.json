@@ -15,7 +15,7 @@
         "appocular/coding-standard": "^1",
         "bossa/phpspec2-expect": "^3.1",
         "ddelnano/dredd-hooks-php": "^2.0",
-        "friends-of-phpspec/phpspec-code-coverage": "^4.3",
+        "friends-of-phpspec/phpspec-code-coverage": "^5.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "phpspec/phpspec": "^6.1",
