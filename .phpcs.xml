@@ -6,7 +6,6 @@
     <file>./routes</file>
     <file>./spec</file>
     <file>./tests</file>
-    <config name="installed_paths" value="../../appocular/coding-standard"/>
     <rule ref="AppocularCodingStandard"/>
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
       <properties>

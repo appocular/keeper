@@ -1,7 +1,9 @@
 {
     "name": "appocular/keeper",
     "description": "Appocular Keeper.",
-    "keywords": ["testing"],
+    "keywords": [
+        "testing"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -48,11 +50,5 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/appocular/coding-standard"
-        }
-    ]
+    "prefer-stable": true
 }
