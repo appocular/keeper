@@ -14,7 +14,7 @@ jobs:
         coverage: none
     - name: Install Dependencies
       run: |
-        composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        composer install --no-interaction --no-progress
     - name: Check codestyle
       run: |
         vendor/bin/phpcs
@@ -32,7 +32,7 @@ jobs:
         coverage: none
     - name: Install Dependencies
       run: |
-        composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        composer install --no-interaction --no-progress
     - name: Unit tests
       run: |
         phpdbg -qrr ./vendor/bin/phpunit --coverage-clover=clover.xml
@@ -55,7 +55,7 @@ jobs:
         coverage: none
     - name: Install Dependencies
       run: |
-        composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        composer install --no-interaction --no-progress
     - name: Spec tests
       run: |
         phpdbg -qrr ./vendor/bin/phpspec run
@@ -83,7 +83,7 @@ jobs:
         npm install dredd@11.2.11 --no-optional
     - name: Install Dependencies
       run: |
-        composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        composer install --no-interaction --no-progress
     - name: API tests
       run: |
         env SHARED_TOKEN=MySharedToken REPORT_COVERAGE=true node_modules/.bin/dredd
