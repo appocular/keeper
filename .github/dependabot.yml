@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  reviewers:
+  - xendk
+  ignore:
+  - dependency-name: league/flysystem
+    versions:
+    - 2.0.2
+    - 2.0.3
+    - 2.0.4
+  - dependency-name: symfony/process
+    versions:
+    - 4.4.19
